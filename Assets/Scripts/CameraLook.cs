@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class CameraLook : MonoBehaviour
@@ -15,7 +12,7 @@ public class CameraLook : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void Update()
+    private void Update()
     {
         float mouseX = Input.GetAxis("Mouse X") * _sensitivity.x * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * _sensitivity.y * Time.deltaTime;

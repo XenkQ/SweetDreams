@@ -7667,7 +7667,7 @@ GameObject:
   - component: {fileID: 281149883}
   - component: {fileID: 281149882}
   m_Layer: 0
-  m_Name: Title
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34262,7 +34262,7 @@ GameObject:
   - component: {fileID: 1344916974}
   - component: {fileID: 1344916973}
   m_Layer: 0
-  m_Name: Objective
+  m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36862,8 +36862,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1451377571}
+  - component: {fileID: 1451377572}
   m_Layer: 0
-  m_Name: ObjectivesList
+  m_Name: ObjectivesManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36889,6 +36890,20 @@ RectTransform:
   m_AnchoredPosition: {x: 698.7433, y: 414.30676}
   m_SizeDelta: {x: 522.5135, y: 251.3866}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1451377572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451377570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f78bc18d66b6de41abe6883de57a06f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: {fileID: 281149882}
+  _description: {fileID: 1344916973}
 --- !u!1 &1453049427
 GameObject:
   m_ObjectHideFlags: 0
@@ -46493,7 +46508,7 @@ GameObject:
   - component: {fileID: 1774180300}
   - component: {fileID: 1774180299}
   m_Layer: 0
-  m_Name: Panel
+  m_Name: Objective
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
