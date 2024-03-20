@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public static class CSVReader
 {
-    public static List<TData> ReadFile<TData>(string path, char delimeter) where TData : class
+    public static List<TData> ReadFile<TData>(string path, char delimeter) where TData : new()
     {
         if (!File.Exists(path)) return null;
 
@@ -15,11 +16,11 @@ public static class CSVReader
         if (line is null) return null;
 
         var data = line.Split(delimeter);
-        var properties = typeof(TData).GetProperties();
+        var propertyInfo = typeof(TData).GetProperties();
 
-        if (data.Length != properties.Length) return null;
+        if (data.Length != propertyInfo.Length) return null;
 
-        //Can add aditional header checking
+        //TODO: Can add aditional header checking
 
         var result = new List<TData>();
         while (!streamReader.EndOfStream)
@@ -29,15 +30,16 @@ public static class CSVReader
             if (line is null) continue;
 
             data = line.Split(delimeter);
-
-            for (int i = 0; i < properties.Length; i++)
+            TData row = new TData();
+            propertyInfo = row.GetType().GetProperties();
+            for (int i = 0; i < propertyInfo.Length; i++)
             {
-                //for testing purposes only strings. In later development maybe add other types;
-                properties[i].SetValue(properties[i], data[i]);
+                //TODO: for testing purposes only strings. In later development maybe add other types;
+                propertyInfo[i].SetValue(row, data[i], null);
             }
-        }
 
-        foreach (var s in result) Debug.Log(s);
+            result.Add(row);
+        }
 
         return result;
     }
