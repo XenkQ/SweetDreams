@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class Dialog
 {
-    public string name;
+    public DialogWriters Writer;
 
     [TextArea(10, 10)]
     public string Text;

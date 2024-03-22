@@ -11684,7 +11684,7 @@ MonoBehaviour:
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
-  m_colorMode: 3
+  m_colorMode: 0
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
     topRight: {r: 1, g: 1, b: 1, a: 1}
@@ -23111,11 +23111,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogName: Win
   _dialogs:
-  - name: Day
+  - Writer: 0
     Text: Win the day
-  - name: Week
+  - Writer: 1
     Text: Win the week
-  - name: Year
+  - Writer: 0
     Text: And you'll win the year, followed by life
 --- !u!1001 &943861005
 PrefabInstance:
