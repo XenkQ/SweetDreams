@@ -1,13 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectivesCompletor : IObjectiveOwner
+[RequireComponent(typeof(IInteractable))]
+public class ObjectivesCompletor : MonoBehaviour, IObjectiveOwner
 {
-    public int ObjectiveID => throw new System.NotImplementedException();
+    [SerializeField] private int _objectiveId;
+    public int ObjectiveID => _objectiveId;
+    private IInteractable interactable;
 
-    public void CompleteObjective(bool IsDone)
+    private void Awake()
     {
+        interactable = GetComponent<IInteractable>();
+    }
 
+    private void Start()
+    {
+        interactable.interactionEvent.AddListener(CompleteObjective);
+    }
+
+    public void CompleteObjective()
+    {
+        ObjectivesManager.EndObjective(ObjectiveID, true);
     }
 }

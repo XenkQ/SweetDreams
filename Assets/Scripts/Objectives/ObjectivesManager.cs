@@ -15,34 +15,21 @@ public class ObjectivesManager : MonoBehaviour
 
     [SerializeField] private ObjectivesUI _objectivesUI;
 
+    public static ObjectivesManager Instance { get; private set; }
+
     private void Awake()
     {
+        if (Instance is null) Instance = this;
+
         _objectives = CSVReader.ReadFile<Objective>(_csvFilePath, separator);
         LoadCompletitionMask();
     }
 
     private void Start()
     {
-        currentTaskId = GetCurrentTaskId().ToString();
-
-        _objectivesUI.Refresh(_objectives[GetCurrentTaskId()]);
-    }
-
-    public static void EndCurrentTask(bool isCompleted)
-    {
-        if (isCompleted)
-            _completionMask[GetCurrentTaskId()] = '1';
-        else 
-            _completionMask[GetCurrentTaskId()] = '0';
-
-        SaveObjectivesCompletition();
-    }
-
-    public static void SaveObjectivesCompletition()
-    {
-        if (!File.Exists(_completionMaskPath)) return;
-
-        File.WriteAllText(_completionMaskPath, _completionMask.ToString());
+        int currentId = GetCurrentTaskId();
+        currentTaskId = currentId.ToString();
+        _objectivesUI.Refresh(_objectives[currentId]);
     }
 
     private void LoadCompletitionMask()
@@ -54,9 +41,42 @@ public class ObjectivesManager : MonoBehaviour
         if (_completionMask.Length == 0) _completionMask = new char[_objectives.Count];
     }
 
+    public static void EndObjective(int id, bool isCompleted)
+    {
+        if (id < 0) return;
+        if (IsObjectiveCompleted(id)) return;
+
+        _completionMask[id] = '1';
+
+        SaveObjectivesCompletition();
+        LoadNextTask();
+    }
+
+    public static bool IsObjectiveCompleted(int id)
+    {
+        if (id < 0) return false;
+
+        if (_completionMask[id] == '1') return true;
+        return false;
+    }
+
+    private static void SaveObjectivesCompletition()
+    {
+        if (!File.Exists(_completionMaskPath)) return;
+
+        File.WriteAllText(_completionMaskPath, _completionMask.ToString());
+    }
+
+    private static void LoadNextTask()
+    {
+        int nextId = GetNextTaskId();
+        currentTaskId = nextId.ToString();
+        Instance._objectivesUI.Refresh(_objectives[nextId]);
+    }
+
     private static int GetCurrentTaskId()
     {
-        if(currentTaskId is not null)
+        if (currentTaskId is not null)
         {
             int id;
             if (int.TryParse(currentTaskId, out id))
@@ -67,5 +87,13 @@ public class ObjectivesManager : MonoBehaviour
             if (_completionMask[i] == '0') return i - 1;
 
         return _completionMask.Length > 0 ? 0 : -1;
+    }
+
+    private static int GetNextTaskId()
+    {
+        int currentId = GetCurrentTaskId();
+        if (currentId + 1 < _completionMask.Length)
+            return currentId + 1;
+        else return -1;
     }
 }

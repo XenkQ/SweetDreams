@@ -3,8 +3,15 @@ using UnityEngine;
 public class CameraLook : MonoBehaviour
 {
     [SerializeField] private Vector2 _sensitivity;
-    [SerializeField] private Transform _player;
+    private Transform _player;
     private float xRotarion = 0f;
+    private Vector3 _cameraOffsetFromPlayerCenter;
+    [SerializeField] private CameraPositioner _positioner;
+
+    private void Awake()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     private void Start()
     {
@@ -21,6 +28,7 @@ public class CameraLook : MonoBehaviour
         xRotarion = Mathf.Clamp(xRotarion, -90f, 90f);
 
         transform.localRotation = Quaternion.Euler(xRotarion, 0, 0);
-        _player.Rotate(Vector3.up * mouseX);
+        _positioner.transform.Rotate(Vector3.up * mouseX);
+        _player.rotation = _positioner.transform.rotation;
     }
 }
