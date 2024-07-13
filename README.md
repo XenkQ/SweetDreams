@@ -1,2 +1,2 @@
 ## SweetDreams
-Game for Acerola Game Jam
+Horror game prototype
